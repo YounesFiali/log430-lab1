@@ -25,7 +25,7 @@ jobs:
         run: |
           docker network create labo01-network
           docker compose build
-          docker compose up -dm
+          docker compose up -d
 
       - name: Attendre MySQL
         run: |
