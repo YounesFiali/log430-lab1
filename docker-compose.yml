@@ -9,6 +9,12 @@ services:
       - mongo
     stdin_open: true
     tty: true  
+    environment:
+      MYSQL_HOST: mysql
+      MONGODB_HOST: mongo
+      MYSQL_DB_NAME: ${MYSQL_DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
     networks:
       - labo01-network
 
@@ -21,7 +27,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: labo01
       MYSQL_DATABASE: labo01_db
-      MYSQL_USER: labo01
+      MYSQL_USER: labo01po
       MYSQL_PASSWORD: labo01
     volumes:
       - ./db-init:/docker-entrypoint-initdb.d
