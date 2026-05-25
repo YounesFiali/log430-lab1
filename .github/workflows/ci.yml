@@ -39,7 +39,7 @@ jobs:
           sleep 5
 
       - name: Éxécuter les tests (TODO - ajouter test_products)
-        run: docker exec store_manager_cli pytest ./src/tests/test_user.py ../src/tests/test_product.py
+        run: docker exec store_manager_cli pytest ./src/tests/test_user.py ./src/tests/test_product.py
 
       - name: Cleanup
         if: always()
