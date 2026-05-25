@@ -18,6 +18,9 @@ jobs:
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
+      - name: Debug .env
+        run: cat .env
+
       - name: Démarrer le conteneur
         run: |
           docker network create labo01-network
