@@ -37,7 +37,9 @@ jobs:
             fi
           done
           sleep 5
-
+      - name: Debug connexion MySQL
+        run: docker exec store_manager_cli python -c "from daos.product_dao import ProductDAO; d = ProductDAO()"
+        
       - name: Éxécuter les tests (TODO - ajouter test_products)
         run: docker exec store_manager_cli pytest ./src/tests/test_user.py ./src/tests/test_product.py
 
