@@ -10,16 +10,13 @@ jobs:
       - name: Checkout dépot
         uses: actions/checkout@v4
 
-      - name: Créer fichier .env (TODO - utilisez les secrets)
+      - name: Créer fichier .env
         run: |
           echo "MYSQL_HOST=mysql" >> .env
           echo "MONGODB_HOST=mongo" >> .env
-          echo "MYSQL_DB_NAME=${{ secrets.MYSQL_DB_NAME }}" >> .env
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-
-      - name: Debug .env
-        run: cat .env
+          echo "MYSQL_DB_NAME=labo01_db" >> .env
+          echo "DB_USERNAME=labo01po" >> .env
+          echo "DB_PASSWORD=labo01" >> .env
 
       - name: Démarrer le conteneur
         run: |
@@ -31,7 +28,7 @@ jobs:
         run: |
           sleep 10
           timeout=60
-          until docker exec mysql mysqladmin ping -h localhost -u root -p${{ secrets.DB_PASSWORD }} --silent; do
+          until docker exec mysql mysqladmin ping -h localhost -u root -plabo01 --silent; do
             echo "Waiting for MySQL..."
             sleep 3
             timeout=$((timeout - 3))
