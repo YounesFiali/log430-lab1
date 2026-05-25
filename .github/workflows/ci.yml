@@ -14,9 +14,9 @@ jobs:
         run: |
           echo "MYSQL_HOST=mysql" >> .env
           echo "MONGODB_HOST=mongo" >> .env
-          echo "MYSQL_DB_NAME={{ secrets.MYSQL_DB_NAME }}" >> .env
-          echo "DB_USERNAME={{ secrets.DB_USERNAME }}" >> .env
-          echo "DB_PASSWORD={{ secrets.DB_PASSWORD }}" >> .env
+          echo "MYSQL_DB_NAME=${{ secrets.MYSQL_DB_NAME }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
       - name: Démarrer le conteneur
         run: |
@@ -41,7 +41,7 @@ jobs:
         run: docker exec -w /app/src store_manager_cli python -c "from daos.product_dao import ProductDAO; d = ProductDAO()"
 
       - name: Éxécuter les tests (TODO - ajouter test_products)
-        run: docker exec -w /app/src store_manager_cli pytest ./src/tests/test_user.py ./src/tests/test_product.py
+        run: docker exec -w /app/src store_manager_cli pytest tests/test_user.py tests/test_product.py
 
       - name: Cleanup
         if: always()
