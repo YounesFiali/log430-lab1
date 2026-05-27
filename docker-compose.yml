@@ -12,7 +12,7 @@ services:
     environment:
       MYSQL_HOST: mysql
       MONGODB_HOST: mongo
-      MYSQL_DB_NAME: ${MYSQL_DB_NAME}
+      MYSQL_DB_NAME: labo01_db
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     networks:

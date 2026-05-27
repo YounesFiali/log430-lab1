@@ -1,21 +1,31 @@
-name: Deploy
+name: CD
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: [completed]
 
 jobs:
   deploy:
     runs-on: self-hosted
-    steps:
-      - name: Pull latest code
-        run: |
-          cd /home/runner/log430-lab1
-          git pull
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
-      - name: Restart containers
+    steps:
+      - name: Checkout dépot
+        uses: actions/checkout@v4
+
+      - name: Créer fichier .env
         run: |
-          cd /home/runner/log430-lab1
+          echo "MYSQL_HOST=mysql" > .env
+          echo "MONGODB_HOST=mongo" >> .env
+          echo "MYSQL_DB_NAME=labo01_db" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+
+      - name: Redémarrer les conteneurs
+        run: |
+          docker network create labo01-network || true
           docker compose down
+          docker compose build
           docker compose up -d
